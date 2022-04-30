@@ -1,0 +1,51 @@
+version: "3.6"
+
+services:
+  video_processing:
+    restart: always
+    build:
+      context: ./video_processing
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./video_processing:/app
+    env_file:
+      - .env
+    networks:
+      - frame_rate_increase_network
+    tty: true
+
+  api:
+    restart: always
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./api:/app
+      - ./video_processing:/app/core
+    env_file:
+      - .env
+    depends_on:
+      - video_processing
+    ports:
+      - "${API_PORT}:80"
+    networks:
+      - frame_rate_increase_network
+
+  web_app:
+    restart: always
+    build:
+      context: ./web_interface
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./web_interface:/app
+    env_file:
+      - .env
+    depends_on:
+      - api
+    ports:
+      - "${WEB_APP_PORT}:80"
+    networks:
+      - frame_rate_increase_network
+
+networks:
+  frame_rate_increase_network:
