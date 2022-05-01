@@ -2,11 +2,15 @@ from pathlib import Path
 
 
 root = Path("./tmp")
+root.mkdir(parents=True, exist_ok=True)
 
 
-def write_bytes(content: bytes, filename: str) -> None:
-    with open(root / filename, "wb") as f:
+def write_bytes(content: bytes, filename: str) -> Path:
+    filepath = root / filename
+    with open(filepath, "wb") as f:
         f.write(content)
+
+    return filepath
 
 
 def read_bytes(filename: str) -> bytes:
