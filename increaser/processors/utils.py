@@ -1,5 +1,5 @@
-from data_types import FrameGenerator, IncreaseAlgorithm
-from video import VideoReader
+from increaser.dtypes import FrameGenerator, IncreaseAlgorithm
+from increaser.video import VideoReader
 from algorithms import mean_interpolation
 
 

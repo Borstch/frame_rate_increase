@@ -1,11 +1,12 @@
-import numpy as np
+from pathlib import Path
+
 import cv2
 
-from data_types import FrameGenerator
+from increaser.dtypes import FrameGenerator
 
 
 class VideoReader:
-    def __init__(self, filepath: str):
+    def __init__(self, filepath: Path):
         self.__reader = self.__init_reader(filepath)
 
     def __del__(self):
@@ -34,23 +35,8 @@ class VideoReader:
         return width, height
 
     @staticmethod
-    def __init_reader(filepath: str) -> cv2.VideoCapture:
+    def __init_reader(filepath: Path) -> cv2.VideoCapture:
         try:
             return cv2.VideoCapture(filepath)
         except:
             raise RuntimeError(f"Unable to read frames from file {filepath}")
-
-
-class VideoWriter:
-    def __init__(self, filepath: str, width: int, height: int, fps: int, codec: int):
-        self.__writer = cv2.VideoWriter(filepath, codec, fps, (width, height))
-
-    def __del__(self):
-        self.__writer.release()
-
-    def write_from_generator(self, frames: FrameGenerator) -> None:
-        for frame in frames:
-            self.write_frame(frame)
-
-    def write_frame(self, frame: np.ndarray) -> None:
-        self.__writer.write(frame)
