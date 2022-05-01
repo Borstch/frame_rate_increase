@@ -1,1 +1,1 @@
-from .utils import double_frame_rate, mean_interpolation
+from .utils import get_algorithm, double_frame_rate, mean_interpolation

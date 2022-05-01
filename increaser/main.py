@@ -21,6 +21,24 @@ tags_metadata = [
 ]
 
 
+def format_long_message(message: dict) -> dict:
+    result = dict(message)
+    for key in result.keys():
+        if (
+            isinstance(result[key], str)
+            and len(result[key]) > config.MAX_MESSAGE_LENGTH
+        ):
+            result[key] = (
+                result[key][: config.MAX_MESSAGE_LENGTH // 4]
+                + "..."
+                + result[key][-(config.MAX_MESSAGE_LENGTH // 4) :]
+            )
+        elif isinstance(result[key], dict):
+            result[key] = format_long_message(result[key])
+
+    return result
+
+
 async def log_request_json(request: Request) -> None:
     params = {**request.path_params, **request.query_params}
     body = {}
@@ -29,7 +47,7 @@ async def log_request_json(request: Request) -> None:
         body = await request.json() if await request.body() else {}
 
     req = f"{request.client.host} {request.method} {request.url.path}"
-    logger.info(f"Request {req} params: {params}, body: {body}")
+    logger.info(f"Request {req} params: {params}, body: {format_long_message(body)}")
 
 
 app = FastAPI(

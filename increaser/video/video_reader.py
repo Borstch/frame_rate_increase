@@ -1,8 +1,9 @@
+from typing import Tuple
 from pathlib import Path
 
 import cv2
 
-from increaser.dtypes import FrameGenerator
+from dtypes import FrameGenerator
 
 
 class VideoReader:
@@ -29,7 +30,7 @@ class VideoReader:
         return self.__reader.get(cv2.CAP_PROP_FOURCC)
 
     @property
-    def frame_size(self) -> tuple[int, int]:
+    def frame_size(self) -> Tuple[int, int]:
         width = int(self.__reader.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(self.__reader.get(cv2.cv.CAP_PROP_FRAME_HEIGHT))
         return width, height

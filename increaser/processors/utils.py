@@ -1,9 +1,13 @@
-from increaser.dtypes import FrameGenerator, IncreaseAlgorithm
-from increaser.video import VideoReader
-from algorithms import mean_interpolation
+from dtypes import FrameGenerator, Increaser, IncreaseAlgorithm
+from video import VideoReader
+from .algorithms import mean_interpolation
 
 
-_ALGORITHMS = {IncreaseAlgorithm.mean: mean_interpolation}
+_ALGORITHMS = {IncreaseAlgorithm.Mean: mean_interpolation}
+
+
+def get_algorithm(algorithm: IncreaseAlgorithm) -> Increaser:
+    return _ALGORITHMS[algorithm]
 
 
 def double_frame_rate(
@@ -12,7 +16,7 @@ def double_frame_rate(
     prev_frame = None
     for frame in reader:
         if prev_frame is not None:
-            yield _ALGORITHMS[algorithm](prev_frame, frame)
+            yield get_algorithm(algorithm)(prev_frame, frame)
 
         prev_frame = frame
         yield frame

@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-from increaser.dtypes import FrameGenerator
+from dtypes import FrameGenerator
 
 
 class VideoWriter:

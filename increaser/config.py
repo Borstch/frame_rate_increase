@@ -26,6 +26,7 @@ API_DESCR = "REST API for increasing video frame rate"
 APP_VERSION = "0.1"
 
 APP_WORKERS = 1
+MAX_MESSAGE_LENGTH = 100
 
 DEBUG = True
 ACCESS_LOG = False
