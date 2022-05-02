@@ -1,3 +1,5 @@
+import logging
+
 from pathlib import Path
 from uuid import uuid4
 
@@ -15,6 +17,7 @@ class VideoWriter:
 
     def __del__(self):
         self.__writer.release()
+        self._logger.info(f"Video {self.__filename} was saved on disk")
 
     @property
     def filename(self):
@@ -31,3 +34,5 @@ class VideoWriter:
     def __get_new_path(self, old_path: Path) -> str:
         dir = old_path.parent
         return str(Path(dir, self.__filename))
+
+    _logger = logging.getLogger("video_writer")
