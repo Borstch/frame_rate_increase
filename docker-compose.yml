@@ -27,7 +27,7 @@ services:
     depends_on:
       - increaser
     ports:
-      - "${WEB_APP_PORT}:80"
+      - "${WEB_APP_PORT}:8501"
     networks:
       - frame_rate_increase_network
 

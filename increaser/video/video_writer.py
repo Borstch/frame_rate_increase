@@ -1,4 +1,5 @@
 from pathlib import Path
+from uuid import uuid4
 
 import numpy as np
 import cv2
@@ -7,11 +8,18 @@ from dtypes import FrameGenerator
 
 
 class VideoWriter:
-    def __init__(self, filepath: Path, width: int, height: int, fps: int, codec: int):
-        self.__writer = cv2.VideoWriter(filepath, codec, fps, (width, height))
+    def __init__(self, filepath: Path, width: int, height: int, fps: int):
+        fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+        self.__filename = str(uuid4()) + ".mp4"
+        self.__writer = cv2.VideoWriter(self.__get_new_path(filepath), fourcc, fps, (width, height))
 
     def __del__(self):
         self.__writer.release()
+
+    @property
+    def filename(self):
+        return self.__filename
+    
 
     def write_from_generator(self, frames: FrameGenerator) -> None:
         for frame in frames:
@@ -19,3 +27,7 @@ class VideoWriter:
 
     def write_frame(self, frame: np.ndarray) -> None:
         self.__writer.write(frame)
+
+    def __get_new_path(self, old_path: Path) -> str:
+        dir = old_path.parent
+        return str(Path(dir, self.__filename))
