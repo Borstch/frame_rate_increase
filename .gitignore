@@ -1,5 +1,7 @@
 __pycache__
 increaser/tmp
+increaser/tests/test_videos
+increaser/tests/*.json
 env
 .env
 
