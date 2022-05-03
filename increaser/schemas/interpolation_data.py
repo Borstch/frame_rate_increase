@@ -8,4 +8,4 @@ from dtypes import IncreaseAlgorithm
 class InterpolationData(BaseModel):
     frame_before: str
     frame_after: str
-    algorithm: Optional[IncreaseAlgorithm] = IncreaseAlgorithm.Mean
+    algorithm: Optional[IncreaseAlgorithm] = IncreaseAlgorithm.Linear

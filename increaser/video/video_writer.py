@@ -13,7 +13,9 @@ class VideoWriter:
     def __init__(self, filepath: Path, width: int, height: int, fps: int):
         fourcc = cv2.VideoWriter_fourcc(*"mp4v")
         self.__filename = str(uuid4()) + ".mp4"
-        self.__writer = cv2.VideoWriter(self.__get_new_path(filepath), fourcc, fps, (width, height))
+        self.__writer = cv2.VideoWriter(
+            self.__get_new_path(filepath), fourcc, fps, (width, height)
+        )
 
     def __del__(self):
         self.__writer.release()
@@ -22,7 +24,6 @@ class VideoWriter:
     @property
     def filename(self):
         return self.__filename
-    
 
     def write_from_generator(self, frames: FrameGenerator) -> None:
         for frame in frames:

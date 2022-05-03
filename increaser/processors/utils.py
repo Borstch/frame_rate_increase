@@ -1,9 +1,12 @@
 from dtypes import FrameGenerator, Increaser, IncreaseAlgorithm
 from video import VideoReader
-from .algorithms import mean_interpolation
+from .algorithms import Interpolator
 
 
-_ALGORITHMS = {IncreaseAlgorithm.Mean: mean_interpolation}
+_ALGORITHMS = {
+    IncreaseAlgorithm.Linear: Interpolator.linear,
+    IncreaseAlgorithm.Radon: Interpolator.radon,
+}
 
 
 def get_algorithm(algorithm: IncreaseAlgorithm) -> Increaser:

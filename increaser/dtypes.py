@@ -9,4 +9,5 @@ Increaser = Callable[[np.ndarray, np.ndarray], np.ndarray]
 
 
 class IncreaseAlgorithm(str, Enum):
-    Mean = "mean"
+    Linear = "linear"
+    Radon = "radon"

@@ -26,4 +26,4 @@ def interpolate_frame_in_between(data: InterpolationData):
             status_code=422,
             detail=f"Invalid interpolation algorithm given: {data.algorithm}",
         )
-    logger.info(f"Done interpolationg.")
+    logger.info("Done interpolationg.")
